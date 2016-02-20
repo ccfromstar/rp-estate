@@ -1,0 +1,65 @@
+<%var parms = url.split("?p=");%>
+<div class="option_left_top">
+	<%if(parms[0] == "/cms/user"){%>
+		<div class="olt1" >用户管理</div>
+	<%}else{%>
+		<div class="olt2" onclick="window.location='/cms/user';">用户管理</div>
+	<%}%>
+</div>
+
+<%if(role != "理财经纪人"){%>
+<div class="cms_left_middle">
+	<div class="olm" >地产管理</div>
+	<%if(parms[0] == "/cms/house"){%>
+		<div class="olt1" >房屋信息</div>
+	<%}else{%>
+		<div class="olt2" onclick="window.location='/cms/house';">房屋信息</div>
+	<%}%>
+	<%if(parms[0] == "/cms/project"){%>
+		<div class="olt1" >楼盘信息</div>
+	<%}else{%>
+		<div class="olt2" onclick="window.location='/cms/project';">楼盘信息</div>
+	<%}%>
+	<%if(parms[0] == "/cms/brokers"){%>
+		<div class="olt1" >经纪人信息</div>
+	<%}else{%>
+		<div class="olt2" onclick="window.location='/cms/brokers';">经纪人信息</div>
+	<%}%>
+	<%if(parms[0] == "/cms/entrust"){%>
+		<div class="olt1" >客户委托</div>
+	<%}else{%>
+		<div class="olt2" onclick="window.location='/cms/entrust';">客户委托</div>
+	<%}%>
+	<%if(parms[0] == "/cms/houserecord"){%>
+		<div class="olt1" >看房记录</div>
+	<%}else{%>
+		<div class="olt2" onclick="window.location='/cms/houserecord';">看房记录</div>
+	<%}%>
+</div>
+<%}%>
+
+<%if(role != "地产经纪人"){%>
+<div class="option_left_bottom">
+	<div class="olm" >财富管理</div>
+	<%if(parms[0] == "/cms/finrole"){%>
+		<div class="olt1" >经纪人信息</div>
+	<%}else{%>
+		<div class="olt2" onclick="window.location='/cms/finrole';">经纪人信息</div>
+	<%}%>
+	<%if(parms[0] == "/cms/fund"){%>
+		<div class="olt1" >产品信息</div>
+	<%}else{%>
+		<div class="olt2" onclick="window.location='/cms/fund';">产品信息</div>
+	<%}%>
+</div>
+<%}%>
+
+<%if(role == "管理员"){%>
+<div class="option_left_bottom_b">
+	<%if(parms[0] == "/cms/role"){%>
+		<div class="olt1" >账户管理</div>
+	<%}else{%>
+		<div class="olt2" onclick="window.location='/cms/role';">账户管理</div>
+	<%}%>
+</div>
+<%}%>

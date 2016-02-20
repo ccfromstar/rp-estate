@@ -1,0 +1,156 @@
+<%var path = "瑞鹏网 > 房屋租赁 > 房产信息 > "+record[0].title;%>
+<% include estate_header %>
+<div class="div-adv">
+    <% include estate_menu %>
+    <% include estate_adv %>
+    <nav class="navigate">
+       <%=path%>
+    </nav>
+    <div class="detail_header">
+        <div class="h1"><%=record[0].title%></div>
+        <div class="h2" onclick="concerned()">关注房源</div>
+        <div class="clear"></div>
+    </div>
+    <div class="detail_middle">
+        <div class="h1">
+            <div id="myCarousel" style="width:300px" class="carousel slide" data-ride="carousel">
+                    <!-- 轮播（Carousel）指标 -->
+                    <ol class="carousel-indicators">
+                        <%var _cla;
+                        var picarr = (record[0].img).split(";");
+                        for(var j=0;j<picarr.length;j++){
+                            _cla = j==0?"active":"";
+                        %>
+                            <li data-target="#myCarousel" data-slide-to="<%=j%>" class="<%=_cla%>"></li>
+                        <%}%>
+                    </ol>   
+                    <!-- 轮播（Carousel）项目 -->
+                    <div class="carousel-inner">
+                    <%
+                        for(var j=0;j<picarr.length;j++){
+                            var _cla = "item";
+                            if(j==0){
+                                _cla = "item active";
+                            }else{
+                                _cla = "item";
+                        }
+                    %>  
+                    <div class="<%=_cla%>">
+                        <img src="/files/<%=picarr[j]%>" style="width:300px;height:230px" alt="" />
+                        <!-- <div class="carousel-caption">
+                            案例名字<%=j%>
+                        </div> -->
+                    </div>
+                    <%
+                    }
+                    %>
+                    </div>
+                    <!-- 轮播（Carousel）导航 -->
+                    <a class="carousel-control left" href="#myCarousel" 
+                        data-slide="prev"><img class="arrowpage" src="/images/arrow-left.gif" /></a>
+                    <a class="carousel-control right" href="#myCarousel" 
+                        data-slide="next"><img class="arrowpage" src="/images/arrow-right.gif" /></a>
+            </div>
+        </div>
+        <div class="h2">
+            <%var tmp1 = (record[0].feature).split(";");%>
+            <%for(var j=0;j<tmp1.length;j++){%>
+                <div class="label"><%=tmp1[j]%></div>
+            <%}%>
+            <p><b>售价：</b><span><%=record[0].price%>万</span></p>
+            <p><b>总面积：</b><%=record[0].area%>平米</p>
+            <p><b>单价：</b><%=record[0].unitPrice%>元/平米</p>
+            <p><b>首付：</b><%=record[0].shoufu%>万</p>
+            <p><b>月供：</b><%=record[0].monthly%>元</p>
+            <p><b>户型：</b><%=record[0].type%></p>
+            <p><b>朝向：</b><%=record[0].orientation%></p>
+            <p><b>楼层：</b><%=record[0].level%></p>
+            <p><b>小区：</b><%=record[0].village%></p>
+            <p><b>地址：</b><%=record[0].address%></p>
+        </div>
+        <div class="h3">
+            <div class="b_l">
+                <img src="/files/<%=record[0].b_img%>" alt="">
+            </div>
+            <div class="b_r">
+                <h1><%=record[0].name%></h1>
+                <h2><%=record[0].job%></h2>
+                <p>历史成交：<%=record[0].history%></p>
+                <p>总带看 ：<%=record[0].record%></p>
+                <p>联系方式：<%=record[0].tel%></p>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="detail_bottom">
+        <ul>
+            <li id="li1" onclick="showTab(1)">房源描述</li>
+            <li id="li2" onclick="showTab(2)">房源图片</li>
+            <li id="li3" onclick="showTab(3)">周边配套</li>
+            <li id="li4" onclick="showTab(4)">楼盘信息</li>
+        </ul>
+        <div class="clear"></div>
+        <hr>
+        <div class="div_show" id="detail_1">
+            <%-record[0].description.replace(/\n/g,"<br/>")%>
+        </div>
+        <div class="div_show" id="detail_2">
+            <%for(var j=0;j<picarr.length;j++){%>
+                 <img src="/files/<%=picarr[j]%>" alt="">
+            <%}%>
+        </div>
+        <div class="div_show" id="detail_3">
+            <%-record[0].matching.replace(/\n/g,"<br/>")%>
+        </div>
+        <div class="div_show" id="detail_4">
+            <table>
+                <tr><td><b>项目名称：</b></td><td><%=record[0].proname%></td></tr>
+                <tr><td><b>项目地址：</b></td><td><%=record[0].proaddress%></td></tr>
+                <tr><td><b>售楼处地址：</b></td><td><%=record[0].salesoffice%></td></tr>
+                <tr><td><b>开发商：</b></td><td><%=record[0].developer%></td></tr>
+                <tr><td><b>最新开盘：</b></td><td><%=record[0].opening%></td></tr>
+                <tr><td><b>最早交房：</b></td><td><%=record[0].others%></td></tr>
+                <tr><td><b>产权年限：</b></td><td><%=record[0].property%>年</td></tr>
+                <tr><td><b>规划户数：</b></td><td><%=record[0].households%></td></tr>
+                <tr><td><b>车位情况：</b></td><td><%=record[0].parking%></td></tr>
+                <tr><td><b>装修状况：</b></td><td><%=record[0].decoration%></td></tr>
+                <tr><td><b>建筑类型：</b></td><td><%=record[0].buildingtype%></td></tr>
+                <tr><td><b>物业类型：</b></td><td><%=record[0].propertytype%></td></tr>
+                <tr><td><b>参考均价：</b></td><td><%=record[0].reference%>元/m<sup>2</sup></td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+function toPage(i){
+   window.location = "/estate_list?p="+i;
+}
+
+showTab(1);
+$("title").html("<%=record[0].title%>");
+
+function showTab(page){
+    for(var i=1;i<5;i++){
+        $("#detail_"+i).css("display","none");
+        $("#li"+i).removeClass("active");
+    }
+    $("#detail_"+page).css("display","block");
+    $("#li"+page).addClass("active");
+}
+
+function concerned(){
+    <%if(!cuser){%>
+        showlogin(0);
+    <%}else{%>
+        $.ajax({ type:"POST" , url: "/role/setConcerned", data:{userid:<%=cid%>,houseid:<%=record[0].id%>}, success: function(data){
+            if(data==200){
+                alert("关注成功！");
+            }else if(data==300){
+                alert("您已关注此房源，不能重复关注！");
+            }
+        }});
+    <%}%>
+}
+</script>
+<% include estate_footer %>

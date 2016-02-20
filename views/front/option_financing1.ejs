@@ -1,0 +1,54 @@
+<% include estate_header %>
+<% include menu %>
+<div class="option_info">
+    <% include navigate %>
+    <div class="option_content">
+      <div class="opetion_left">
+        <% include option_nav %>
+      </div>
+      <div class="opetion_right">
+          <div class="option_rightcontent">
+            <div class="f_content">
+              <table class="table table-bordered table-hover fund_table">
+                <tr>
+                  <th></th>
+                  <th colspan="4">基金概况</th>
+                  <th colspan="4">基金收益率</th>
+                  <th></th>
+                </tr>
+                <tr>
+                  <th>序号</th>
+                  <th>基金简称</th>
+                  <th>基金经理</th>
+                  <th>投资策略</th>
+                  <th>运行时间</th>
+                  <th>近6月</th>
+                  <th>近1年</th>
+                  <th>累计收益</th>
+                  <th>年化收益</th>
+                  <th>最新净值</th>
+                </tr>
+                <%for(var i in record){%>
+                  <tr>
+                    <td><%=record[i].id%></td>
+                    <td><%=record[i].name%></td>
+                    <td><%=record[i].manager%></td>
+                    <td><%=record[i].strategy%></td>
+                    <td><%=record[i].runtime%></td>
+                    <td><%=record[i].sixmonth%></td>
+                    <td><%=record[i].oneyear%></td>
+                    <td class="orange"><%=record[i].accu%></td>
+                    <td><%=record[i].yearly%></td>
+                    <td><%=record[i].networth%></td>
+                  </tr>
+                <%}%>
+              </table>
+            </div>
+              <% include pager %>
+          </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+</div>
+
+ <% include footer %>

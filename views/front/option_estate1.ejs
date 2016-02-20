@@ -1,0 +1,43 @@
+<% include estate_header %>
+<% include menu %>
+<div class="option_info">
+    <% include navigate %>
+    <div class="option_content">
+      <div class="opetion_left">
+        <% include option_nav %>
+      </div>
+      <div class="opetion_right">
+          <div class="option_rightcontent">
+              <%for(var i in record){
+                var tmp = (record[i].img).split(";");
+                var tmp1 = (record[i].feature).split(";");
+              %>
+                <div class="div_concerned" onclick="window.open('/estate_detail?id=<%=record[i].id%>');">
+                  <div class="listleft">
+                    <img src="/files/<%=tmp[0]%>" alt="">
+                  </div>
+                  <div class="listcenter">
+                    <h1><%=record[i].title%></h1>
+                    <p><%=record[i].region%> / <%=record[i].address%></p>
+                    <p><%=record[i].type%> / <%=record[i].area%>平米</p>
+                    <h2>
+                      <%for(var j=0;j<tmp1.length;j++){%>
+                      <div class="label"><%=tmp1[j]%></div>
+                      <%}%>
+                    </h2>
+                  </div>
+                  <div class="listright">
+                    <h1><%=record[i].price%>万</h1>
+                    <h2><%=record[i].unitPrice%>元/平米</h2>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+              <%}%>
+             <% include pager %>
+          </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+</div>
+
+ <% include footer %>

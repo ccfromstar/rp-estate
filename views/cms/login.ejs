@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <!-- 强烈建议为 html 根元素指定 lang 属性，从而为文档设置正确的语言。这将有助于语音合成工具确定其所应该采用的发音，有助于翻译工具确定其翻译时所应遵守的规则等等。-->
+  <head>
+    <title>瑞鹏后台管理系统</title>
+    <!-- IE 支持通过特定的 <meta> 标签来确定绘制当前页面所应该采用的 IE 版本。除非有强烈的特殊需求，否则最好是设置为 edge mode，从而通知 IE 采用其所支持的最新的模式。-->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <!-- 通过明确声明字符编码，能够确保浏览器快速并容易的判断页面内容的渲染方式。这样做的好处是，可以避免在 HTML 中使用字符实体标记（character entity），从而全部与文档编码一致（一般采用 UTF-8 编码）。-->
+    <meta charset="UTF-8">
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <script src="/js/jquery.min.js"></script>
+    <link href="/plugin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/plugin/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/cookiesoperator.js"></script>
+    <style type="text/css">
+      *{margin:0;padding:0;font-size:12px;font-family:微软雅黑;color: #797979;}
+      .login_tab p{line-height: 10px;margin-top: 25px;}
+      hr{
+        border: 1px solid #ddd;
+      }
+    </style>
+  </head>
+
+  <body>
+  <div class="container" style="margin-top:100px">  
+     <form action="/cms/logindo" method="post" class="well" style="width:450px;margin:0px auto;">
+        <div style="width:100%;text-align:center;"><img src="/images/logo.png" style="width:400px"></div>
+        <table style="width:400px;margin:auto;">
+            <tr>
+              <td><hr></td><td style="width:120px;font-size:16px;text-align:center;">后台管理系统</td><td><hr></td>
+            </tr>
+        </table>
+        <table style="width:400px;margin:auto;" class="login_tab">
+            <tr>
+              <td colspan="2">
+                  <p>用户名</p>
+                  <input type="text" class="input form-control" id="username" name="username"></input>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                  <p>密码</p>
+                  <input type="password" class="input form-control" id="password" name="password"></input>
+                  <div style="margin-top:10px;">
+                      <input id="rk" name="rk" type="checkbox" style="vertical-align:text-bottom; margin-bottom:1px; margin-bottom:-1px\9;">&nbsp;记住我</input>
+                  </div>
+              </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                  <div onclick="cmslogin()" style="cursor:pointer;text-align:center;color:#FFFFFF;font-size:12px;width:400px;background:#3276B1;height:35px;line-height:35px;margin-top:25px;border-radius:5px;" >登 陆</div>
+                </td>
+            </tr>
+        </table>
+    </form>
+  </div>
+  <script type="text/javascript">
+    function cmslogin() {
+        if($("#username").val()==""){
+            alert("用户名必填！");return false;
+        }
+        if($("#password").val()==""){
+            alert("密码必填！");return false;
+        }
+
+        //判断是否记住
+        if(document.getElementById("rk").checked){
+            setCookie("cusername",document.getElementById("username").value,30);
+            setCookie("cpassword",document.getElementById("password").value,30);
+            setCookie("rk",document.getElementById("rk").checked,30);
+        }else{
+            deleteCookie("cusername");
+            deleteCookie("cpassword");
+            deleteCookie("rk");
+        }
+        document.forms[0].submit();
+    }
+
+    //是否记住用户名，密码
+    var remember = getCookie("rk");
+    if (remember) {
+        $("#username").val(getCookie("cusername"));
+        $("#password").val(getCookie("cpassword"));
+        $("#rk").attr("checked","checked");
+    }
+
+    <%if(info){%>
+      alert("<%=info%>");
+    <%}%>
+  </script>
+  </body>
+</html>

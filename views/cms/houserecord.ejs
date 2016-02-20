@@ -1,0 +1,169 @@
+<!--页面逻辑-->
+<% include header %>
+<table class="tbpage">
+    <tr>
+      <td>
+      <button type="button" class="btn btn-default" id="table_new" onclick="newDoc()" >新增看房记录</button>
+			<table class="table table-hover" id="table_list">
+    		<thead>
+      			<tr>
+        			<th>序号</th>
+        			<th>看房日期</th>
+        			<th>经纪人</th>
+        			<th>房源信息</th>
+              <th>客户姓名</th>
+              <th>客户手机号</th>
+      			</tr>
+    		</thead>
+    		<tbody>
+    		<%for(var i in record){%>
+      			<tr>
+        			<td><%-record[i].id%></td>
+        			<td><%=record[i].datetime%></td>
+        			<td><%=record[i].name%></td>
+        			<td style="cursor:pointer;" onclick="window.open('/estate_detail?id=<%=record[i].id%>');"><%=record[i].housetitle%></td>
+              <td><%=record[i].customername%></td>
+              <td><%=record[i].username%></td>
+      			</tr>
+    		<%}%>
+    		</tbody>
+    		</table>
+    		<!--分页符-->
+			<div style='width:100%;text-align:center'>
+  				<button type='button' <%=isFirstPage?"disabled":""%> <%=isFirstPage?"":"onclick=toPage("+(page-1)+");"%> class='btn btn-default btn-xs'>上一页</button>
+  				当前第<%=page%>页/共<%=totalpage%>页&nbsp;<%=total%>条数据
+  				<button type='button' <%=isLastPage?"disabled":""%> <%=isLastPage?"":"onclick=toPage("+(page+1)+");"%> class='btn btn-default btn-xs'>下一页</button>
+			</div>  
+			<br/><br/>  	
+      </td>
+    </tr>
+</table>
+<!--table footer -->
+	  </td>
+    </tr>
+  </table>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="width:800px" >
+      <div class="modal-content">
+         <div class="modal-body">
+            <table class="table table-bordered">
+                <tr>
+                    <td>看房日期</td>
+                    <td>
+                        <input type="text" id="datetime" style="cursor:pointer" readonly  class="Wdate" onfocus="WdatePicker({doubleCalendar:false,dateFmt:'yyyy-MM-dd'})"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>经纪人id</td>
+                    <td><input type="text" class="input-sm form-control" id="brokersid" ></input></td>
+                </tr>
+                <tr>
+                    <td>房屋标题</td>
+                    <td><input type="text" class="input-sm form-control" id="housetitle" ></input></td>
+                </tr>
+                <tr>
+                    <td>用户手机</td>
+                    <td><input type="text" class="input-sm form-control" id="usermobile" ></input></td>
+                </tr>
+             </table>
+             <input type="hidden" id="docid" ></input>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" 
+               data-dismiss="modal">关闭
+            </button>
+            <button type="button" class="btn btn-primary" onclick="submitDoc();">
+               提交
+            </button>
+         </div>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+	var _page = "houserecord";
+
+  function setImg(name){
+    var _html = "<img src='/files/"+name+"' style='height:60px;cursor:pointer;' /></a>";
+    $("#picimg").html(_html);
+    $("#imgname").val(name);
+  }
+
+	function newDoc(){
+		$("#datetime").val("");
+		$("#brokersid").val("");
+    $("#housetitle").val("");
+		$("#usermobile").val("");
+		$("#docid").val("0");
+
+		$('#addModal').modal('show');
+	}
+
+  function toPage(i){
+    window.location = "/cms/houserecord?p="+i;
+  }
+
+	function editDoc(id){
+        //根据id读取字段
+        $.ajax({ type:"POST" , url: "/"+_page+"/getinfo", data:{id:id}, success: function(data){
+               $("#username").val(data[0].username); 
+               $("#password").val(data[0].password); 
+               $("#name").val(data[0].name);
+               $("#role").val(data[0].role);
+               $("#docid").val(id);
+        }});
+        $('#addModal').modal('show');
+    }
+
+	function submitDoc(){
+		if($("#docid").val()=="0"){
+			//insert
+			$.ajax({ type:"POST" , url: "/"+_page+"/insert", data:{
+                datetime:$("#datetime").val(),
+                brokersid:$("#brokersid").val(),
+                housetitle:$("#housetitle").val(),
+                usermobile:$("#usermobile").val()
+                }, success: function(data){
+                    if(data==200){
+                        $('#addModal').modal('hide');
+                        window.location.reload();
+                    }
+        	}});
+		}else{
+			//update
+			$.ajax({ type:"POST" , url: "/"+_page+"/update", data:{
+                name:$("#datetime").val(),
+                job:$("#brokersid").val(),
+                store:$("#housetitle").val(),
+                tel:$("#usermobile").val(),
+                docid:$("#docid").val(),
+                }, success: function(data){
+                    if(data==200){
+                        $('#addModal').modal('hide');
+                        window.location.reload();
+                    }
+        	}});
+		}
+    }
+
+    function delinfo(id){
+    	$.confirm({
+    		title: '请确认',
+    		content: '是否确认删除？',
+    		confirm: function(){
+        		$.ajax({ type:"POST" , url: "/"+_page+"/delinfo", data:{id:id}, success: function(data){
+        			if(data==200){
+              			window.location.reload();     
+        			}
+      			}});	
+    		}
+		});
+    }
+
+<%if(info){%>
+    $.alert({title: '提示信息',content: '<%=info%>'});
+<%}%>
+</script>
+<% include footer %>

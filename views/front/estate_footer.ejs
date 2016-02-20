@@ -1,0 +1,43 @@
+<%
+var arr1 = "房产首页,公司介绍,房产信息,房屋贷款,房屋经纪人".split(",");
+var arr2 = "/estate_home,/estate_company,/estate_list,/estate_loan,/estate_broker".split(",");
+%>
+<footer>
+    <div class="f-center">
+        <div class="f-tleft">
+            <ul>
+                <%for(var i in arr1){%>
+                    <li><a href="<%=arr2[i]%>"><%=arr1[i]%></a></li>
+                <%}%>
+                <li><a class="a-red" href='/financing_home'>财富中心</a></li>
+            </ul>
+        </div>
+        <div class="f-tright">
+            房屋交易，承诺有保障 / 热线电话：4006-899-855
+        </div>
+        <div class="clear"></div>
+        <hr/>
+        <div class="f-mleft">
+           <div class="f-title">合作与友情链接</div>
+           <p>
+                <ul>
+                    <li>北京二手房房产网</li>
+                    <li>北京新房网</li>
+                    <li>杭州地铁房</li>
+                    <li>天津房屋出租</li>
+                </ul>
+           </p>
+           <div class="clear"></div>
+           <div class="f-title">联系我们</div>
+           <p>办公地址：上海市浦东新区丁香路1408号 联系电话: 021-50458392 50458396</p>
+        </div>
+        <div class="f-mright">
+            <img src="/images/qrcode.png">
+        </div>
+        <div class="clear"></div>
+        <hr/>
+        <p>上海瑞鹏房地产有限公司|网络经营许可证 沪ICP备 11033455号-11</p>
+        <p>© 2015-2016 瑞鹏网 www,ruipeng.com版权所有</p>
+        <div class="footer_bottom"></div>
+    </div>
+</footer>

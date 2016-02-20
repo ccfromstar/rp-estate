@@ -1,0 +1,60 @@
+<% include estate_header %>
+<% include menu %>
+<div class="option_info">
+    <% include navigate %>
+    <div class="option_content">
+      <div class="opetion_left">
+        <% include option_nav %>
+      </div>
+      <div class="opetion_right">
+          <div class="option_rightcontent">
+              <table class="olayout">
+                <tr>
+                  <td>
+                      <h1>我的账户信息</h1><br/><br/>
+                      <table class="oinfo">
+                        <tr>
+                          <td>姓名</td>
+                          <td class="tdl"><input type="text" class="input form-control" id="name" value="<%=cuser%>" ></input></td>
+                        </tr>
+                        <tr>
+                          <td>手机号码</td>
+                          <td class="tdl"><input type="text" class="input form-control" id="name" disabled value="<%=ctel%>" ></input></td>
+                        </tr>
+                        <tr>
+                          <td>电子邮箱</td>
+                          <td class="tdl"><input type="text" class="input form-control" id="name" value="<%=cemail%>" ></input></td>
+                        </tr>
+                      </table>
+                      <br/><br/>
+                      <div style="cursor:pointer;margin-top:35px;text-align:center;color:#FFFFFF;font-size:12px;width:200px;background:#DA362A;height:35px;line-height:35px;border-radius:5px;margin:0 auto;" onclick="reg()">确认修改</div>
+                  </td>
+                  <td style="border-left:1px solid #000">
+                      <h1>修改登陆密码</h1>
+                      <br/><br/>
+                      <table class="oinfo">
+                        <tr>
+                          <td>输入旧密码</td>
+                          <td class="tdl"><input type="text" class="input form-control" id="name" ></input></td>
+                        </tr>
+                        <tr>
+                          <td>设置新密码</td>
+                          <td class="tdl"><input type="text" class="input form-control" id="name" ></input></td>
+                        </tr>
+                        <tr>
+                          <td>确认新密码</td>
+                          <td class="tdl"><input type="text" class="input form-control" id="name" ></input></td>
+                        </tr>
+                      </table>
+                      <br/><br/>
+                      <div style="cursor:pointer;margin-top:35px;text-align:center;color:#FFFFFF;font-size:12px;width:200px;background:#DA362A;height:35px;line-height:35px;border-radius:5px;margin:0 auto;" onclick="reg()">确认修改</div>
+                  </td>
+                </tr>
+              </table>  
+          </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+</div>
+
+ <% include footer %>

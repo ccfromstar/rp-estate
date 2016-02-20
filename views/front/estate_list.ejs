@@ -1,0 +1,152 @@
+<%
+var fx = "1室;2室;3室;4室;5室".split(";");
+var sj = "500万以下;500万-1000万;1000万-2000万;2000万-3500万;3500万-6000万;6000万以上".split(";");
+%>
+<% include estate_header %>
+<div class="div-adv">
+    <% include estate_menu %>
+    <% include estate_adv %>
+    <% include navigate %>
+
+    <div class="searchbar">
+        <input type="text" id="keywords" placeholder="请输入区域或小区名查询房价" value="<%=key%>">
+        <img src="/images/search.png" onclick="search()" alt="">
+        <span class="searchright">共有<span class="red"> <%=total%> </span>套房源</span>
+    </div>
+
+    <div class="keywords">
+        <p>
+            <b>区域：</b>
+            <%var cl1 = "";
+            if(class1 == ""){cl1 = "activekw";}
+            %>
+            <span class="kw <%=cl1%>" onclick="keysearch('p1','');" >不限</span>
+            <%for(var i in rows2){
+                cl1 = "";
+                if(rows2[i].name == decodeURI(class1)){
+                    cl1 = "activekw";
+                }
+            %>
+                <span class="kw <%=cl1%>" onclick="keysearch('p1','<%=rows2[i].name%>');" ><%=rows2[i].name%></span>
+            <%}%>
+        </p>
+        <p>
+            <b>地铁：</b>
+            <%var cl2 = "";
+            if(class2 == ""){cl2 = "activekw";}
+            %>
+            <span class="kw <%=cl2%>" onclick="keysearch('p2','');" >不限</span>
+            <%for(var i=1;i<19;i++){
+                cl2 = "";
+                if(decodeURI(class2) == (i+"号线")){
+                    cl2 = "activekw";
+                }
+            %>
+                <span class="kw <%=cl2%>" onclick="keysearch('p2','<%=(i+"号线")%>');" ><%=(i+"号线")%></span>
+            <%}%>
+        </p>
+        <p>
+            <b>房型：</b>
+            <%var cl3 = "";
+            if(class3 == ""){cl3 = "activekw";}
+            %>
+            <span class="kw <%=cl3%>" onclick="keysearch('p3','');" >不限</span>
+            <%for(var i=0;i<fx.length;i++){
+                cl3 = "";
+                if(fx[i] == decodeURI(class3)){
+                    cl3 = "activekw";
+                }
+            %>
+                <span class="kw <%=cl3%>" onclick="keysearch('p3','<%=fx[i]%>');" ><%=fx[i]%></span>
+            <%}%>
+        </p>
+        <p>
+            <b>售价：</b>
+            <%var cl4 = "";
+            if(class4 == ""){cl4 = "activekw";}
+            %>
+            <span class="kw <%=cl4%>" onclick="keysearch('p4','');" >不限</span>
+            <%for(var i=0;i<sj.length;i++){
+                cl4 = "";
+                if(sj[i] == decodeURI(class4)){
+                    cl4 = "activekw";
+                }
+            %>
+                <span class="kw <%=cl4%>" onclick="keysearch('p4','<%=sj[i]%>');" ><%=sj[i]%></span>
+            <%}%>
+        </p>
+    </div>
+
+    <div class="statebar">
+        <div><b>已选条件：</b><%=" "+class1%><%=" "+class3%><span class="clearall" onclick="window.location='/estate_list';"><img src="/images/clearall.png" alt="">清空所有</span></div>
+    </div>
+
+    <div class="orderbar">
+        <b>排序方式：</b>
+        <span>
+            <select id="sortby" onchange="setorder(this.value);">
+                <option value="1">发布日期从近到远</option>
+                <option value="2">单价从低到高</option>
+            </select>    
+        </span>
+    </div>
+
+    <%for(var i in record){
+    	var tmp = (record[i].img).split(";");
+    	var tmp1 = (record[i].feature).split(";");
+    %>
+    	<div class="div_list" onclick="window.open('/estate_detail?id=<%=record[i].id%>');">
+    		<div class="listleft">
+    			<img src="/files/<%=tmp[0]%>" alt="">
+    		</div>
+    		<div class="listcenter">
+    			<h1><%=record[i].title%></h1>
+    			<p><%=record[i].region%> / <%=record[i].address%></p>
+    			<p><%=record[i].type%> / <%=record[i].area%>平米</p>
+    			<h2>
+    				<%for(var j=0;j<tmp1.length;j++){%>
+						<div class="label"><%=tmp1[j]%></div>
+    				<%}%>
+    			</h2>
+    		</div>
+    		<div class="listright">
+    			<h1><%=record[i].price%>万</h1>
+    			<h2><%=record[i].unitPrice%>元/平米</h2>
+    		</div>
+    		<div class="clear"></div>
+    	</div>
+    <%}%>
+    <% include pager %>
+    <input type="hidden" id="p1" value="<%=class1%>">
+    <input type="hidden" id="p2" value="<%=class2%>">
+    <input type="hidden" id="p3" value="<%=class3%>">
+    <input type="hidden" id="p4" value="<%=class4%>">
+    <input type="hidden" id="orderby" value="<%=orderby%>">
+</div>
+<script type="text/javascript">
+$("#sortby").val(<%=orderby%>);
+
+function toPage(i){
+   window.location = "/estate_list?p="+i;
+}
+
+function search(){
+    var keywords = $("#keywords").val();
+    window.location = "/estate_list?q="+keywords;
+}
+
+function keysearch(key,value){
+    $("#"+key).val(value);
+    refrerto();
+}
+
+function setorder(i){
+    $("#orderby").val(i);
+    refrerto();
+}
+
+function refrerto(){
+    window.location = "/estate_list?region="+$("#p1").val()+"&type="+$("#p3").val()+"&orderby="+$("#orderby").val()+"&subway="+$("#p2").val()+"&price="+$("#p4").val();
+}
+</script>
+<% include estate_footer %>

@@ -1,0 +1,108 @@
+<% include financing_header %>
+<% include financing_menu %>
+<div class="div-adv">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+         <ol class="carousel-indicators">
+          <%for(var i=0;i<5;i++){%>
+          <%if(i == 0){%>
+              <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <%}else{%>
+              <li data-target="#myCarousel" data-slide-to="<%=i%>"></li>
+          <%}%>
+          <%}%>
+        </ol>
+        <!-- Carousel items -->
+        <div class="carousel-inner">
+          <%for(var i=1;i<6;i++){%>
+          <%if(i == 1){%>
+              <div id="plane<%=i%>" class="item active">
+          <%}else{%>
+              <div id="plane<%=i%>" class="item">
+          <%}%>
+                <img class="adv-img" src="/images/adv2.jpg" alt=""/>    
+              </div>
+          <%}%>
+        </div>
+        <!-- Carousel nav -->
+          <a class="left carousel-control" href="#myCarousel" data-slide="prev" ><img class="arrow" src="/images/arrow-left.gif" /></a>
+          <a class="right carousel-control" href="#myCarousel" data-slide="next" ><img class="arrow" src="/images/arrow-right.gif" /></a>
+    </div>
+</div>
+<div class="search_home">
+    <div class="search_left">
+      <h1>瑞鹏理财</h1>
+      <h2>瑞彩祥云 鹏霄万里！</h2>
+    </div>
+    <div class="search_right">
+        <input type="text" id="keywords" placeholder="请输入关键字" >
+        <img src="/images/search.png" onclick="search()" alt="">
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="fin_content">
+  <table class="table table-bordered table-hover fund_table">
+    <tr>
+      <th></th>
+      <th colspan="4">基金概况</th>
+      <th colspan="4">基金收益率</th>
+      <th></th>
+    </tr>
+    <tr>
+      <th>序号</th>
+      <th>基金简称</th>
+      <th>基金经理</th>
+      <th>投资策略</th>
+      <th>运行时间</th>
+      <th>近6月</th>
+      <th>近1年</th>
+      <th>累计收益</th>
+      <th>年化收益</th>
+      <th>最新净值</th>
+      <th>操作</th>
+    </tr>
+    <%for(var i in record){%>
+      <tr style="cursor:pointer;" onclick="window.open('/financing_detail?id=<%=record[i].id%>');">
+        <td><%=record[i].id%></td>
+        <td><%=record[i].name%></td>
+        <td><%=record[i].manager%></td>
+        <td><%=record[i].strategy%></td>
+        <td><%=record[i].runtime%></td>
+        <td><%=record[i].sixmonth%></td>
+        <td><%=record[i].oneyear%></td>
+        <td class="orange"><%=record[i].accu%></td>
+        <td><%=record[i].yearly%></td>
+        <td><%=record[i].networth%></td>
+        <td>
+          <div class="h2" onclick="concerned(<%=record[i].id%>)">关注</div>
+        </td>
+      </tr>
+    <%}%>
+  </table>
+</div>
+<% include financing_define %>
+<% include financing_advbottom %>
+<style type="text/css">
+  body{
+    background: #EDEFEC;
+  }
+</style>
+<script>
+function concerned(id){
+    <%if(!cuser){%>
+        showlogin(0);
+    <%}else{%>
+        $.ajax({ type:"POST" , url: "/role/setfConcerned", data:{userid:<%=cid%>,fundid:id}, success: function(data){
+            if(data==200){
+                alert("关注成功！");
+            }else if(data==300){
+                alert("您已关注此产品，不能重复关注！");
+            }
+        }});
+    <%}%>
+}
+function search(){
+    var keywords = $("#keywords").val();
+    window.location = "/financing_list?q="+keywords;
+}
+</script>
+<% include financing_footer %>

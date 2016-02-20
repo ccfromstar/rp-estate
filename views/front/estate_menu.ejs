@@ -1,0 +1,28 @@
+<%
+var arr1 = "房产首页,公司介绍,房产信息,房屋贷款,房屋经纪人".split(",");
+var arr2 = "/estate_home,/estate_company?p=1,/estate_list,/estate_loan,/estate_broker".split(",");
+var arr3 = ",,,,".split(",");
+var parms = url.split("?");
+if(url == "/estate_home"){
+    arr3[0] = "class=active";
+}else if(url == "/estate_broker"){
+    arr3[4] = "class=active";
+}else if(url == "/estate_loan"){
+    arr3[3] = "class=active";
+}else if(parms[0] == "/estate_list"){
+    arr3[2] = "class=active";
+}else if(parms[0] == "/estate_company"){
+    arr3[1] = "class=active";
+}
+%>
+<div id="menu">
+    <div class="center">
+        <nav class="link">
+            <ul>
+                <%for(var i in arr1){%>
+                    <li <%=arr3[i]%>><a href="<%=arr2[i]%>"><%=arr1[i]%></a></li>
+                <%}%>
+            </ul>
+        </nav>
+    </div>
+</div>

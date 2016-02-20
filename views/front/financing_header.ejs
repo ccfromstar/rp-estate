@@ -1,0 +1,17 @@
+<header id="header_f">
+    <div class="center">
+        <div class="logo" onclick="window.location='/';">瑞鹏网</div>
+        <div class="tel-f"><img class="imgtel" src="/images/call.png" /> 4006-899-855</div>
+        <div class="right-top-f">
+            
+            <%if(!cuser){%>
+				<span class="right-top-login-f" onclick="showlogin(0)" ><img class="imgadmin" src="/images/admin2.png" /> 登陆</span>
+            	<span class="right-top-reg-f">立即注册</span>
+			<%}else{%>
+	            	<span class="right-top-login-f" onclick="window.location='/option_info';"><img class="imgadmin"  src="/images/admin2.png" /> 个人中心</span>
+	            	<span class="right-top-info-f">欢迎您，<%=cuser%></span><span class="right-top-reg-f" onclick="document.exit_form.submit();">| 退出</span>
+				<form name="exit_form" method="post" action="/role/louout"></form>
+			<%}%>
+        </div>
+    </div>
+</header>

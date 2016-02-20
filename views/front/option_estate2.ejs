@@ -1,0 +1,33 @@
+<% include estate_header %>
+<% include menu %>
+<div class="option_info">
+    <% include navigate %>
+    <div class="option_content">
+      <div class="opetion_left">
+        <% include option_nav %>
+      </div>
+      <div class="opetion_right">
+          <div class="option_rightcontent">
+              <table class="log_tb table">
+                  <tr>
+                    <th>看房日期</th>
+                    <th>经纪人</th>
+                    <th>联系方式</th>
+                    <th>房源信息</th>
+                  </tr>
+                  <%for(var i in record){%>
+                      <tr>
+                        <td><%=record[i].datetime%></td>
+                        <td><%=record[i].name%></td>
+                        <td><%=record[i].tel%></td>
+                        <td class="pointer" onclick="window.open('/estate_detail?id=<%=record[i].id%>');"><%=record[i].housetitle%></td>
+                      </tr>
+                  <%}%>
+              </table>
+          </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+</div>
+
+ <% include footer %>

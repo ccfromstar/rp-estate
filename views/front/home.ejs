@@ -1,0 +1,69 @@
+<% include estate_header %>
+<div class="div-adv">
+    <div id="menu">
+      <div class="center">
+          <nav class="link">
+              <ul>
+                  <li class="active"><a href="#">瑞鹏首页</a></li>
+                  <li><a href="/estate_home">房屋租售</a></li>
+                  <li><a href="/financing_home">财富中心</a></li>
+              </ul>
+          </nav>
+      </div>
+    </div>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+         <ol class="carousel-indicators">
+          <%for(var i=0;i<5;i++){%>
+          <%if(i == 0){%>
+              <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <%}else{%>
+              <li data-target="#myCarousel" data-slide-to="<%=i%>"></li>
+          <%}%>
+          <%}%>
+        </ol>
+        <!-- Carousel items -->
+        <div class="carousel-inner">
+          <%for(var i=1;i<6;i++){%>
+          <%if(i == 1){%>
+              <div id="plane<%=i%>" class="item active">
+          <%}else{%>
+              <div id="plane<%=i%>" class="item">
+          <%}%>
+                <img class="adv-img" src="/images/adv.jpg" alt=""/>    
+              </div>
+          <%}%>
+        </div>
+        <!-- Carousel nav -->
+          <a class="left carousel-control" href="#myCarousel" data-slide="prev" ><img class="arrow" src="/images/arrow-left.gif" /></a>
+          <a class="right carousel-control" href="#myCarousel" data-slide="next" ><img class="arrow" src="/images/arrow-right.gif" /></a>
+    </div>
+</div>
+<div class="div-in">
+    <div class="in-left">
+        <h1>房屋租售</h1>
+        <p><img onclick="window.location='/estate_home';" src="/images/round1.png" alt=""></p>
+        <h2>真房源，安家首选</h2>
+        <h3>去找房</h3>
+    </div>
+    <div class="in-right">
+        <h1>财富中心</h1>
+        <p><img onclick="window.location='/financing_home';" src="/images/round2.png" alt=""></p>
+        <h2>为您实现财务自由</h2>
+        <h3>去理财</h3>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="dic-company">
+    <div class="company-left">
+    	<p>完全透明交易 直营连锁门店</p>
+    	<p>高素质人才服务 100%真房源</p> 
+    	<p>真实成交价格公示</p> 
+    </div>
+    <div class="company-right">
+    	<p>上海瑞鹏创立于2010年，主营高端国际社区，目前直营分支机构有30家，旗下经纪人达数百名。</p>
+    	<p>瑞鹏地产的业务范围涉及房屋全程代理、房屋租赁、房屋买卖、按揭贷款、房地产投资咨询、商铺租售、写字楼租售及商品房代理等多个方面。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+        瑞鹏地产人始终坚持以客户需求为指导思想，以建立卓越的客户关系为工作战略目标，努力为广大客户提供安全交易和个性化服务。</p>
+    </div>
+    <div class="clear"></div>
+</div>
+ <% include footer %>

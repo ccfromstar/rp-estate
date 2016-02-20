@@ -1,0 +1,25 @@
+<%
+var arr1 = "理财首页,相关介绍,理财产品".split(",");
+var arr2 = "/financing_home,/financing_introduce,/financing_list".split(",");
+var arr3 = ",,".split(",");
+if(url == "/financing_home"){
+    arr3[0] = "class=active";
+}else if(url == "/financing_list"){
+    arr3[2] = "class=active";
+}else if(url == "/financing_introduce"){
+    arr3[1] = "class=active";
+}
+%>
+<div id="menu_f">
+    <div class="center">
+        <div class="logo_f"><img src="/images/logo_f.png"></div>
+        <nav class="link">
+            <ul>
+                <%for(var i in arr1){%>
+                    <li <%=arr3[i]%>><a href="<%=arr2[i]%>"><%=arr1[i]%></a></li>
+                <%}%>
+            </ul>
+        </nav>
+        <div class="clear"></div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<%
+var path = "";
+var parms = url.split("?");
+if(url == "/option_info"|url == "/option_estate1"|url == "/option_estate2"|url == "/option_estate3"|url == "/option_financing1"|url == "/option_financing2"){
+    path = "瑞鹏网 > 个人中心";
+}else if(parms[0] == "/estate_company"){
+	path = "瑞鹏网 > 房屋租赁 > 公司介绍";
+}else if(parms[0] == "/estate_loan"){
+	path = "瑞鹏网 > 房屋租赁 > 房屋贷款";
+}else if(parms[0] == "/estate_broker"){
+	path = "瑞鹏网 > 房屋租赁 > 房产经纪人";
+}else if(parms[0] == "/estate_list"){
+	path = "瑞鹏网 > 房屋租赁 > 房产信息";
+}else if(parms[0] == "/financing_introduce"){
+	path = "瑞鹏网 > 财富中心 > 相关介绍";
+}else if(parms[0] == "/financing_list"){
+	path = "瑞鹏网 > 财富中心 > 理财产品";
+}
+%>
+<nav class="navigate">
+    <%=path%>
+</nav>
+<script type="text/javascript">
+	$("title").html("<%=path%>");
+</script>

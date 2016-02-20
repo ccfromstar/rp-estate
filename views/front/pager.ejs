@@ -1,0 +1,33 @@
+<!--分页符-->
+<div class="pagerframe">
+    <div class='div-info' style="display:none">
+      当前第<%=page%>页/共<%=totalpage%>页&nbsp;<%=total%>条数据
+    </div>
+    <!--分页符-->
+    <div class='div-pager'>
+      <ul class="pagination">
+        <li <%=isFirstPage?"class=disabled":""%>><a <%=isFirstPage?"":"onclick=toPage("+(page-1)+");"%> >&laquo;</a></li>
+      <%
+        var minpage = 0;
+        var maxpage = 10;
+        if((totalpage+1)>10){
+          minpage = page - 5;
+          maxpage = page + 5;
+        }
+        if(page - 5 < 1){
+          maxpage = maxpage - page + 5;
+        }
+        if(page + 5 > (totalpage+1)){
+          minpage = minpage - (page + 5) + (totalpage +1);
+        }
+        for(var i=1;i<(totalpage+1);i++){
+          var active = "";
+          if(i==page){active = "class=active";}
+            if(i>minpage && i<maxpage){
+      %>
+        <li <%=active%>><a href="#" onclick="toPage(<%=i%>);"><%=i%></a></li>
+      <%}}%>
+        <li <%=isLastPage?"class=disabled":""%>><a <%=isLastPage?"":"onclick=toPage("+(page+1)+");"%> >&raquo;</a></li>
+      </ul>
+  </div>
+</div>

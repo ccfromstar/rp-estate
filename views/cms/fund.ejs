@@ -1,0 +1,259 @@
+<!--页面逻辑-->
+<% include header %>
+<table class="tbpage">
+    <tr>
+      <td>
+      <button type="button" class="btn btn-default" id="table_new" onclick="newDoc()" >新增产品</button>
+			<table class="table table-hover" id="table_list">
+    		<thead>
+      			<tr>
+        			<th>序号</th>
+        			<th>基金简称</th>
+        			<th>基金经理</th>
+        			<th>运行时间</th>
+              <th>年化收益</th>
+              <th>操作</th>
+      			</tr>
+    		</thead>
+    		<tbody>
+    		<%for(var i in record){%>
+      			<tr>
+        			<td><%-record[i].id%></td>
+        			<td><%=record[i].name%><%=(record[i].sepical == 1?"（特）":"")%></td>
+        			<td><%=record[i].manager%></td>
+        			<td><%=record[i].runtime%></td>
+              <td><%=record[i].yearly%></td>
+              <td>
+                <button type="button" class="btn btn-default btn-xs" onclick="editDoc(<%=record[i].id%>)">编辑</button>
+                <button type="button" class="btn btn-default btn-xs" onclick="setSpecial(<%=record[i].id%>,<%=(record[i].sepical == 1?0:1)%>)">特推</button>
+              </td>
+      			</tr>
+    		<%}%>
+    		</tbody>
+    		</table>
+    		<!--分页符-->
+			<div style='width:100%;text-align:center'>
+  				<button type='button' <%=isFirstPage?"disabled":""%> <%=isFirstPage?"":"onclick=toPage("+(page-1)+");"%> class='btn btn-default btn-xs'>上一页</button>
+  				当前第<%=page%>页/共<%=totalpage%>页&nbsp;<%=total%>条数据
+  				<button type='button' <%=isLastPage?"disabled":""%> <%=isLastPage?"":"onclick=toPage("+(page+1)+");"%> class='btn btn-default btn-xs'>下一页</button>
+			</div>  
+			<br/><br/>  	
+      </td>
+    </tr>
+</table>
+<!--table footer -->
+	  </td>
+    </tr>
+  </table>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="width:800px" >
+      <div class="modal-content">
+         <div class="modal-body">
+            <table class="table table-bordered">
+                <tr>
+                    <td>基金简称</td>
+                    <td><input type="text" class="input-sm form-control" id="name" ></input></td>
+                </tr>
+                <tr>
+                    <td>基金经理</td>
+                    <td><input type="text" class="input-sm form-control" id="manager" ></input></td>
+                </tr>
+                <tr>
+                    <td>投资策略</td>
+                    <td><input type="text" class="input-sm form-control" id="strategy" ></input></td>
+                </tr>
+                <tr>
+                    <td>运行时间</td>
+                    <td><input type="text" class="input-sm form-control" id="runtime" ></input></td>
+                </tr>
+                <tr>
+                    <td>认购起点</td>
+                    <td><input type="text" class="input-sm form-control" id="start" ></input></td>
+                </tr>
+                <tr>
+                    <td>开放日</td>
+                    <td><input type="text" class="input-sm form-control" id="opendate" ></input></td>
+                </tr>
+                <tr>
+                    <td>近6月收益率</td>
+                    <td><input type="text" class="input-sm form-control" id="sixmonth" ></input></td>
+                </tr>
+                <tr>
+                    <td>近1年收益率</td>
+                    <td><input type="text" class="input-sm form-control" id="oneyear" ></input></td>
+                </tr>
+                <tr>
+                    <td>累计收益率</td>
+                    <td><input type="text" class="input-sm form-control" id="accu" ></input></td>
+                </tr>
+                <tr>
+                    <td>年化收益率</td>
+                    <td><input type="text" class="input-sm form-control" id="yearly" ></input></td>
+                </tr>
+                <tr>
+                    <td>最新净值</td>
+                    <td><input type="text" class="input-sm form-control" id="networth" ></input></td>
+                </tr>
+                <tr>
+                    <td>公司介绍</td>
+                    <td colspan="5">
+                      <textarea class="input-sm form-control" id="introduction"  rows="3"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>照片</td>
+                    <td>
+                      <div>（建议大小:122*162）</div>
+                      <iframe frameborder=0 src="/cms/upload" style="width:550px;height:60px"></iframe>  
+                      <div id="picimg"></div>
+                    </td>
+                </tr>
+             </table>
+             <input type="hidden" id="docid" ></input>
+             <input type="hidden" id="imgname" ></input>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" 
+               data-dismiss="modal">关闭
+            </button>
+            <button type="button" class="btn btn-primary" onclick="submitDoc();">
+               提交
+            </button>
+         </div>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+	var _page = "fund";
+
+  function setImg(name){
+    var _html = "<img src='/files/"+name+"' style='height:60px;cursor:pointer;' /></a>";
+    $("#picimg").html(_html);
+    $("#imgname").val(name);
+  }
+
+	function newDoc(){
+    	$("#name").val("");
+    	$("#manager").val("");
+        $("#strategy").val("");
+        $("#runtime").val("");
+    	$("#sixmonth").val("");
+        $("#oneyear").val("");
+        $("#accu").val("");
+        $("#yearly").val("");
+        $("#networth").val("");
+    	$("#docid").val("0");
+        $("#imgname").val("");
+        $("#picimg").html("");
+        $("#introduction").val("");
+        $("#start").val("");
+        $("#opendate").val("");
+    	$('#addModal').modal('show');
+	}
+
+  function toPage(i){
+    window.location = "/cms/fund?p="+i;
+  }
+
+	function editDoc(id){
+        //根据id读取字段
+        $.ajax({ type:"POST" , url: "/"+_page+"/getinfo", data:{id:id}, success: function(data){
+                $("#name").val(data[0].name);
+                $("#manager").val(data[0].manager);
+                $("#strategy").val(data[0].strategy);
+                $("#runtime").val(data[0].runtime);
+                $("#sixmonth").val(data[0].sixmonth);
+                $("#oneyear").val(data[0].oneyear);
+                $("#accu").val(data[0].accu);
+                $("#yearly").val(data[0].yearly);
+                $("#networth").val(data[0].networth);
+                $("#start").val(data[0].start);
+                $("#opendate").val(data[0].opendate);
+                $("#picimg").html("");
+                $("#imgname").val("");
+                $("#introduction").val(data[0].introduction);
+                setImg(data[0].img);
+                $("#docid").val(id);
+        }});
+        $('#addModal').modal('show');
+    }
+
+	function submitDoc(){
+		if($("#docid").val()=="0"){
+			//insert
+			$.ajax({ type:"POST" , url: "/"+_page+"/insert", data:{
+                name:$("#name").val(),
+                manager:$("#manager").val(),
+                strategy:$("#strategy").val(),
+                runtime:$("#runtime").val(),
+                sixmonth:$("#sixmonth").val(),
+                oneyear:$("#oneyear").val(),
+                accu:$("#accu").val(),
+                yearly:$("#yearly").val(),
+                networth:$("#networth").val(),
+                img:$("#imgname").val(),
+                start:$("#start").val(),
+                opendate:$("#opendate").val(),
+                introduction:$("#introduction").val()
+                }, success: function(data){
+                    if(data==200){
+                        $('#addModal').modal('hide');
+                        window.location.reload();
+                    }
+        	}});
+		}else{
+			//update
+			$.ajax({ type:"POST" , url: "/"+_page+"/update", data:{
+                name:$("#name").val(),
+                manager:$("#manager").val(),
+                strategy:$("#strategy").val(),
+                runtime:$("#runtime").val(),
+                sixmonth:$("#sixmonth").val(),
+                oneyear:$("#oneyear").val(),
+                accu:$("#accu").val(),
+                yearly:$("#yearly").val(),
+                networth:$("#networth").val(),
+                docid:$("#docid").val(),
+                img:$("#imgname").val(),
+                start:$("#start").val(),
+                opendate:$("#opendate").val(),
+                introduction:$("#introduction").val()
+                }, success: function(data){
+                    if(data==200){
+                        $('#addModal').modal('hide');
+                        window.location.reload();
+                    }
+        	}});
+		}
+    }
+
+    function delinfo(id){
+    	$.confirm({
+    		title: '请确认',
+    		content: '是否确认删除？',
+    		confirm: function(){
+        		$.ajax({ type:"POST" , url: "/"+_page+"/delinfo", data:{id:id}, success: function(data){
+        			if(data==200){
+              			window.location.reload();     
+        			}
+      			}});	
+    		}
+		});
+    }
+
+    function setSpecial(id,sepical){
+        $.ajax({ type:"POST" , url: "/"+_page+"/setSpecial", data:{id:id,sepical:sepical}, success: function(data){
+            if(data==200){
+                window.location.reload();     
+            }
+        }});  
+    }
+
+<%if(info){%>
+    alert('<%=info%>');
+<%}%>
+</script>
+<% include footer %>

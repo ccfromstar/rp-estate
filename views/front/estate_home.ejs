@@ -1,0 +1,72 @@
+<% include estate_header %>
+<div class="div-adv">
+    <% include estate_menu %>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+         <ol class="carousel-indicators">
+          <%for(var i=0;i<5;i++){%>
+          <%if(i == 0){%>
+              <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <%}else{%>
+              <li data-target="#myCarousel" data-slide-to="<%=i%>"></li>
+          <%}%>
+          <%}%>
+        </ol>
+        <!-- Carousel items -->
+        <div class="carousel-inner">
+          <%for(var i=1;i<6;i++){%>
+          <%if(i == 1){%>
+              <div id="plane<%=i%>" class="item active">
+          <%}else{%>
+              <div id="plane<%=i%>" class="item">
+          <%}%>
+                <img class="adv-img" src="/images/adv.jpg" alt=""/>    
+              </div>
+          <%}%>
+        </div>
+        <!-- Carousel nav -->
+          <a class="left carousel-control" href="#myCarousel" data-slide="prev" ><img class="arrow" src="/images/arrow-left.gif" /></a>
+          <a class="right carousel-control" href="#myCarousel" data-slide="next" ><img class="arrow" src="/images/arrow-right.gif" /></a>
+    </div>
+</div>
+<div class="search_home">
+    <div class="search_left">
+      <h1>100%真房源</h1>
+      <h2>住安心家，瑞鹏帮您选！</h2>
+    </div>
+    <div class="search_right">
+        <input type="text" id="keywords" placeholder="请输入区域或小区名查询房价" >
+        <img src="/images/search.png" onclick="search()" alt="">
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="home_list">
+    <h1><b>瑞鹏好房</b> 我们帮您选</h1>
+    <h2>好房源这么多，特推房源，为您精心挑选</h2>
+    <%for(var i in rows1){
+        var tmp = (rows1[i].img).split(";");
+        var tmp1 =(rows1[i].village).split("（");
+    %>
+        <figure class="home_house" onclick="window.open('/estate_detail?id=<%=rows1[i].id%>');">
+              <img src="/files/<%=tmp[0]%>" alt="">
+              <figcaption>
+                <div class="area1"><%=rows1[i].title%></div>
+                <div class="area2"><%=tmp1[0]%> <%=rows1[i].type%> <%=rows1[i].area%>平米</div>
+              </figcaption>
+              <div class="home_price"><%=rows1[i].price%>万</div>
+        </figure>
+    <%}%>
+    <div class="clear"></div>
+</div>
+<% include estate_advbottom %>
+<script>
+function search(){
+  var keywords = $("#keywords").val();
+  window.location = "/estate_list?q="+keywords;
+}
+</script>
+<style type="text/css">
+  body{
+    background: #EDEFEC;
+  }
+</style>
+<% include estate_footer %>

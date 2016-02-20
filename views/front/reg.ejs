@@ -1,0 +1,323 @@
+<!--业务逻辑-->
+<!--页面逻辑-->
+<% include estate_header %>
+	<div class="regback">
+		<div id="step1" class="regframe">
+			<table style="width:450px;margin:auto;margin-top:50px;">
+				<tr>
+					<td>
+						<hr class="hr1">
+					</td>
+					<td style="width:60px;font-size:16px;text-align:center;">注册</td>
+					<td>
+						<hr class="hr1">
+					</td>
+				</tr>
+			</table>
+			<table style="width:450px;margin:auto;" class="reg_tab">
+				<tr>
+					<td colspan="2">
+						<input type="text" class="input form-control" id="name" placeholder="请输入姓名"></input>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="text" class="input form-control" id="username" onblur="checkMobile(this.value)" placeholder="请输入手机号码"></input>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="text" class="input form-control" id="email" onblur="checkEmail(this.value)" placeholder="请输入常用邮箱"></input>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="password" class="input form-control" id="password" placeholder="请输入登陆密码"></input>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="password" class="input form-control" id="password1" placeholder="请再次输入登陆密码"></input>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div style="cursor:pointer;margin-top:35px;text-align:center;color:#FFFFFF;font-size:12px;width:450px;background:#DA362A;height:35px;line-height:35px;border-radius:5px;" onclick="next()">创建账户</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="step2" style="display:none"  class="questionnaireframe">
+			<table style="width:600px;margin:auto;margin-top:50px;">
+				<tr>
+					<td>
+						<hr class="hr1">
+					</td>
+					<td style="width:60px;font-size:16px;text-align:center;">问卷</td>
+					<td>
+						<hr class="hr1">
+					</td>
+				</tr>
+			</table>
+			<table style="width:600px;margin:auto;" class="reg_tab">
+				<tr>
+					<td colspan="2">
+						<img src="/images/tks.png" alt=""> <span class="redinfo">感谢您的注册！为了更好的为您服务，请先完成一份问卷，方便我们为您提供个性化的服务!</span>
+					</td>
+				</tr>
+			</table>
+			<div class="question_list">
+				<table style="width:600px;margin:auto;" class="reg_tab">
+					<tr>
+						<td colspan="2">
+							<div class="reg_question">您的生日是 ？</div>
+							<div class="reg_answer">
+								<input type="text" name="brithday" id="brithday" style="cursor:pointer" readonly class="Wdate" onfocus="WdatePicker({doubleCalendar:false,dateFmt:'yyyy-MM-dd'})"></input>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="reg_question">1、您目前最关注哪类房产的信息（可多选）？</div>
+							<div class="reg_answer">
+								<input type="checkbox" name="q1" value="A" />大平层公寓
+								<input type="checkbox" name="q1" value="B" />别墅
+								<input type="checkbox" name="q1" value="C" />商铺
+								<input type="checkbox" name="q1" value="D" />办公楼
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="reg_question">2、您希望本网站获取房产哪些方面的信息？</div>
+							<div class="reg_answer">
+								<input type="radio" name="q2" value="A" />房产限购政策解读
+								<input type="radio" name="q2" value="B" />贷款相关政策
+								<input type="radio" name="q2" value="C" />税费的问题房产
+								<input type="radio" name="q2" value="D" />家居装修问题
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="reg_question">3、您比较房产哪方面的因素？</div>
+							<div class="reg_answer">
+								<input type="radio" name="q3" value="A" />地理位置
+								<input type="radio" name="q3" value="B" />区域环境
+								<input type="radio" name="q3" value="C" />周边配套
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="reg_question">4、您最关注的房子价位在什么区间？</div>
+							<div class="reg_answer">
+								<input type="radio" name="q4" value="A" />500万左右
+								<input type="radio" name="q4" value="B" />500-1000万
+								<input type="radio" name="q4" value="C" />1000-2000万
+								<input type="radio" name="q4" value="D" />2000-3000万
+								<input type="radio" name="q4" value="E" />3000及以上
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="reg_question">5、您个人目前已经或准备委托的理财占您或家庭所拥有总资产的比重是多少？</div>
+							<div class="reg_answer">
+								<input type="radio" name="q5" value="A" />80-100%
+								<input type="radio" name="q5" value="B" />50-80%
+								<input type="radio" name="q5" value="C" />20-50%
+								<input type="radio" name="q5" value="D" />0-20%
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="reg_question">6、您计划投资多久</div>
+							<div class="reg_answer">
+								<input type="radio" name="q6" value="A" />6个月以下
+								<input type="radio" name="q6" value="B" />6个月到1年
+								<input type="radio" name="q6" value="C" />1年到3年
+								<input type="radio" name="q6" value="D" />3年以上
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="reg_question">7、您的投资目的是？</div>
+							<div class="reg_answer">
+								<input type="radio" name="q7" value="A" />资产稳定
+								<input type="radio" name="q7" value="B" />资产稳健增长
+								<input type="radio" name="q7" value="C" />资产快速增长
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="reg_question">8、投资有风险，您能够承受的投资组合在短期内最大跌幅？</div>
+							<div class="reg_answer">
+								<input type="radio" name="q8" value="A" />跌幅5%以下
+								<input type="radio" name="q8" value="B" />跌幅介于5%-25%
+								<input type="radio" name="q8" value="C" />跌幅介于25%-50%
+								<input type="radio" name="q8" value="D" />跌幅50%以上
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<table style="width:600px;margin:auto;" class="reg_tab">
+				<tr>
+					<td colspan="2">
+						<div style="cursor:pointer;margin-top:35px;text-align:center;color:#FFFFFF;font-size:12px;width:200px;background:#DA362A;height:35px;line-height:35px;border-radius:5px;margin:0 auto;" onclick="reg()">确认提交</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="infoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" data-backdrop="static" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content suc_info">
+					<table style="width:450px;margin:auto;margin-top:50px;">
+						<tr>
+							<td>
+								<hr class="hr1">
+							</td>
+							<td style="width:120px;font-size:16px;text-align:center;color:#fff">感谢您的配合</td>
+							<td>
+								<hr class="hr1">
+							</td>
+						</tr>
+					</table>
+					<h1>恭喜您注册成功</h1>
+					<h1>感谢您的配合，扫描二维码关注我们的公众号即可获得精美礼品！</h1>
+					<h1 class="suc_infocenter"><img src="/images/qrcode.png"></h1>
+					<h1>
+			    	<div class="btn-left" onclick="window.location='/';">返回首页</div>
+			    	<div class="btn-right" onclick="window.location='/option_info';">返回个人中心</div>
+			    </h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		function checkMobile(str) {
+			var re = /^1\d{10}$/;
+			if (!re.test(str)) {
+				alert("手机号格式错误！");
+				$("#username").val("");
+			}
+		}
+
+		function checkEmail(str) {
+			var re = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+			if (!re.test(str)) {
+				alert("E-mail格式错误！");
+				$("#email").val("");
+			}
+		}
+
+		function next() {
+			if ($("#name").val() == "") {
+				alert("姓名必填！");
+				return false;
+			}
+			if ($("#password").val() == "") {
+				alert("登陆密码必填！");
+				return false;
+			}
+			if ($("#password1").val() == "") {
+				alert("登陆密码必填！");
+				return false;
+			}
+			if ($("#password").val() != $("#password1").val()) {
+				alert("两次输入的密码不一致");
+				return false;
+			}
+			if ($("#username").val() == "") {
+				alert("手机号必填！");
+				return false;
+			}
+			if ($("#email").val() == "") {
+				alert("邮箱必填！");
+				return false;
+			}
+			$.ajax({
+				type: "POST",
+				url: "/role/checkusername",
+				data: {
+					username: $("#username").val()
+				},
+				success: function(data) {
+					if (data == "300") {
+						alert("手机号已注册，不能重复注册！");
+					} else if (data == "200") {
+						$("#step1").css("display", "none");
+						$("#step2").css("display", "inline-block");
+					}
+				}
+			});
+		}
+		/*获取复选框的值*/
+		function jqchk(name) { //jquery获取复选框值 
+			var chk_value = '';
+			$('input[name="' + name + '"]:checked').each(function() {
+				if (chk_value == "") {
+					chk_value = $(this).val();
+				} else {
+					chk_value = chk_value + "*" + $(this).val();
+				}
+			});
+			return chk_value;
+		}
+		/*获取单选框的值*/
+		function jqradio(name) {
+			return $(':checked[name="' + name + '"]').val();
+		}
+
+		function reg() {
+			if ($("#brithday").val() == "") {
+				alert("生日必选！");
+				return false;
+			}
+			var question_label = true;  //是否答完了
+			var result_list = '';  //答案列表
+			/*问题1*/
+			var answer1 = jqchk('q1');
+			if (answer1 == '') {
+				question_label = false;
+			}
+			result_list = answer1;
+			/*问题2~8*/
+			for (var i = 2; i < 9; i++) {
+				var answer = jqradio('q'+i);
+				if (!answer) {
+					question_label = false;
+				}else{
+					result_list += ';'+answer;
+				}
+			}
+			
+			if (!question_label) {
+				alert('您还有题目没有答完！');
+				return false;
+			}
+			
+			$.ajax({
+				type: "POST",
+				url: "/role/regUser",
+				data: {
+					name: $("#name").val(),
+					password: $("#password").val(),
+					username: $("#username").val(),
+					email: $("#email").val(),
+					brithday: $("#brithday").val(),
+					result_list:result_list
+				},
+				success: function(data) {
+					if (data == "200") {
+						$("#infoModal").modal("show");
+					}
+				}
+			});
+		}
+	</script>
+	<% include footer %>

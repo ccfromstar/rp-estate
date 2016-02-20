@@ -1,0 +1,164 @@
+<!--页面逻辑-->
+<% include header %>
+	<table class="tbpage">
+		<tr>
+			<td>
+				<button type="button" class="btn btn-default" id="table_new" onclick="newDoc()">新增楼盘信息</button>
+				<table class="table table-hover" id="table_list">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>楼盘名称</th>
+							<th>开发商</th>
+							<th>规划户数</th>
+							<th>参考均价</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%for(var i in record){%>
+							<tr>
+								<td>
+									<%-record[i].pid%>
+								</td>
+								<td>
+									<%=record[i].proname%>
+								</td>
+								<td>
+									<%=record[i].developer%>
+								</td>
+								<td>
+									<%=record[i].households%>
+								</td>
+								<td>
+									<%=record[i].reference%>
+								</td>
+								<td>
+									<button type="button" class="btn btn-default btn-xs" onclick="editDoc(<%=record[i].pid%>)">编辑</button>
+								</td>
+							</tr>
+							<%}%>
+					</tbody>
+				</table>
+				<!--分页符-->
+				<div style='width:100%;text-align:center'>
+					<button type='button' <%=isFirstPage? "disabled": ""%>
+						<%=isFirstPage?"":"onclick=toPage("+(page-1)+");"%> class='btn btn-default btn-xs'>上一页</button>
+					当前第
+					<%=page%>页/共
+						<%=totalpage%>页&nbsp;
+							<%=total%>条数据
+								<button type='button' <%=isLastPage? "disabled": ""%>
+									<%=isLastPage?"":"onclick=toPage("+(page+1)+");"%> class='btn btn-default btn-xs'>下一页</button>
+				</div>
+				<br/>
+				<br/>
+			</td>
+		</tr>
+	</table>
+	<!--table footer -->
+	</td>
+	</tr>
+	</table>
+
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width:800px">
+			<div class="modal-content">
+				<div class="modal-body">
+					<table class="table table-bordered">
+						<tr>
+							<td>项目名称</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="proname"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>项目地址</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="proaddress"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>售楼处地址</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="salesoffice"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>开发商</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="developer"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>最新开盘</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="opening"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>最早交房</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="others"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>产权年限</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="property" oninput="checkNum(this)"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>规划户数</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="households" oninput="checkNum(this)"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>车位情况</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="parking"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>装修状况</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="decoration"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>建筑类型</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="buildingtype"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>物业类型</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="propertytype"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>参考均价</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="reference" oninput="checkNum(this)"></input>
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" id="docid"></input>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" class="btn btn-primary" onclick="submitDoc();">
+						提交
+					</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal -->
+		<input type="hidden" id="info" value="<%=info%>" />
+		<script type="text/javascript" src="/javascripts/cms/project.js"></script>
+		<% include footer %>

@@ -1,0 +1,327 @@
+<!--页面逻辑-->
+<% include header %>
+<table class="tbpage">
+    <tr>
+      <td>
+      <button type="button" class="btn btn-default" id="table_new" onclick="newDoc()" >新增房屋信息</button>
+			<table class="table table-hover" id="table_list">
+    		<thead>
+      			<tr>
+        			<th>序号</th>
+        			<th>房屋标题</th>
+        			<th>总价</th>
+              <th>单价</th>
+        			<th>面积</th>
+              <th>状态</th>
+              <th>操作</th>
+      			</tr>
+    		</thead>
+    		<tbody>
+    		<%for(var i in record){%>
+      			<tr>
+        			<td><%-record[i].id%></td>
+        			<td style="text-align:left;"><%=record[i].title%><%=(record[i].sepical == 1?"（特）":"")%></td>
+        			<td><%=record[i].price%>万</td>
+              <td><%=record[i].unitPrice%>元/平方米</td>
+        			<td><%=record[i].area%>平米</td>
+              <td><%=record[i].state%></td>
+              <td>
+                <button type="button" class="btn btn-default btn-xs" onclick="editDoc(<%=record[i].id%>)">编辑</button>
+                <%if(record[i].state == "上线"){%>
+                  <button type="button" class="btn btn-default btn-xs" onclick="delinfo(<%=record[i].id%>,'下线')">下线</button>
+                <%}else{%>
+                  <button type="button" class="btn btn-default btn-xs" onclick="delinfo(<%=record[i].id%>,'上线')">上线</button>
+                <%}%>
+                <button type="button" class="btn btn-default btn-xs" onclick="setSpecial(<%=record[i].id%>,<%=(record[i].sepical == 1?0:1)%>)">特推</button>
+              </td>
+      			</tr>
+    		<%}%>
+    		</tbody>
+    		</table>
+    		<!--分页符-->
+			<div style='width:100%;text-align:center'>
+  				<button type='button' <%=isFirstPage?"disabled":""%> <%=isFirstPage?"":"onclick=toPage("+(page-1)+");"%> class='btn btn-default btn-xs'>上一页</button>
+  				当前第<%=page%>页/共<%=totalpage%>页&nbsp;<%=total%>条数据
+  				<button type='button' <%=isLastPage?"disabled":""%> <%=isLastPage?"":"onclick=toPage("+(page+1)+");"%> class='btn btn-default btn-xs'>下一页</button>
+			</div>  
+			<br/><br/>  	
+      </td>
+    </tr>
+</table>
+<!--table footer -->
+	  </td>
+    </tr>
+  </table>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog" style="width:1000px" >
+      <div class="modal-content">
+         <div class="modal-body">
+            <table class="table table-bordered">
+                <tr>
+                    <td>标题</td>
+                    <td><input type="text" class="input-sm form-control" id="title" ></input></td>
+                    <td>售价</td>
+                    <td><input type="text" class="input-sm form-control" id="price" ></input></td>
+                    <td>单价</td>
+                    <td><input type="text" class="input-sm form-control" id="unitPrice" ></input></td>
+                </tr>
+                <tr>
+                    <td>首付</td>
+                    <td><input type="text" class="input-sm form-control" id="shoufu" ></input></td>
+                    <td>月供</td>
+                    <td><input type="text" class="input-sm form-control" id="monthly" ></input></td>
+                    <td>户型</td>
+                    <td><input type="text" class="input-sm form-control" id="type" ></input></td>
+                </tr>
+                <tr>
+                    <td>朝向</td>
+                    <td><input type="text" class="input-sm form-control" id="orientation" ></input></td>
+                    <td>楼层</td>
+                    <td><input type="text" class="input-sm form-control" id="level" ></input></td>
+                     <td>小区</td>
+                    <td><input type="text" class="input-sm form-control" id="village" ></input></td>
+                </tr>
+                <tr>
+                    <td>地址</td>
+                    <td><input type="text" class="input-sm form-control" id="address" ></input></td>
+                    <td>经纪人id</td>
+                    <td><input type="text" class="input-sm form-control" id="brokersid" ></input></td>
+                    <td>区域</td>
+                    <td><input type="text" class="input-sm form-control" id="region" ></input></td>
+                </tr>
+                <tr>
+                    <td>地铁</td>
+                    <td><input type="text" class="input-sm form-control" id="subway" ></input></td>
+                    <td>特色</td>
+                    <td><input type="text" class="input-sm form-control" id="feature" ></input></td>
+                    <td>面积</td>
+                    <td><input type="text" class="input-sm form-control" id="area" ></input></td>
+                </tr>
+                <tr>
+                    <td>房屋类型</td>
+                    <td>
+                      <select id="housetype" class="input-sm selectpicker">
+                        <option value="-">请选择</option>
+                        <option value="新房">新房</option>
+                        <option value="二手房">二手房</option>
+                      </select>
+                    </td>
+                    <td>楼盘</td>
+                    <td>
+                      <select id="projectid" class="input-sm selectpicker">
+                        <option value="-">请选择</option>
+                        <%for(var i in rows2){%>
+                            <option value="<%=rows2[i].pid%>"><%=rows2[i].proname%></option>
+                        <%}%>
+                      </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>房屋描述</td>
+                    <td colspan="5">
+                      <textarea class="input-sm form-control" id="description"  rows="3"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>周边配套</td>
+                    <td colspan="5">
+                      <textarea class="input-sm form-control" id="matching"  rows="3"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>图片</td>
+                    <td colspan="5">
+                      <div>（建议大小:180*125）</div>
+                      <iframe frameborder=0 src="/cms/upload" style="width:550px;height:60px"></iframe>  
+                      <div id="picimg"></div>
+                    </td>
+                </tr>
+             </table>
+             <input type="hidden" id="docid" ></input>
+             <input type="hidden" id="imgname" ></input>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" 
+               data-dismiss="modal">关闭
+            </button>
+            <button type="button" class="btn btn-primary" onclick="submitDoc();">
+               提交
+            </button>
+         </div>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+	var _page = "house";
+
+  function setImg(name){
+    var _html = "<img src='/files/"+name+"' style='height:60px;cursor:pointer;' /></a>";
+    if($("#picimg").html()==""){
+      name = name;
+    }else{
+      name = $("#imgname").val() + ";" + name;
+    }
+    _html = $("#picimg").html() + _html;
+    $("#picimg").html(_html);
+    $("#imgname").val(name);
+  }
+
+	function newDoc(){
+		$("#title").val("");
+		$("#price").val("");
+    $("#unitPrice").val("");
+		$("#shoufu").val("");
+		$("#monthly").val("");
+    $("#type").val("");
+    $("#orientation").val("");
+    $("#level").val("");
+    $("#village").val("");
+    $("#address").val("");
+    $("#brokersid").val("");
+    $("#region").val("");
+    $("#subway").val("");
+    $("#feature").val("");
+    $("#area").val("");
+    $("#description").val("");
+    $("#matching").val("");
+    $("#imgname").val("");
+    $("#picimg").html("");
+    $("#housetype").val("-");
+    $("#projectid").val("-");
+		$("#docid").val("0");
+
+		$('#addModal').modal('show');
+	}
+
+  function toPage(i){
+    window.location = "/cms/house?p="+i;
+  }
+
+	function editDoc(id){
+        //根据id读取字段
+        $.ajax({ type:"POST" , url: "/"+_page+"/getinfo", data:{id:id}, success: function(data){
+               $("#title").val(data[0].title);
+               $("#price").val(data[0].price);
+               $("#unitPrice").val(data[0].unitPrice);
+               $("#shoufu").val(data[0].shoufu);
+               $("#monthly").val(data[0].monthly);
+               $("#type").val(data[0].type);
+               $("#orientation").val(data[0].orientation);
+               $("#level").val(data[0].level);
+               $("#village").val(data[0].village);
+               $("#address").val(data[0].address);
+               $("#brokersid").val(data[0].brokersid);
+               $("#region").val(data[0].region);
+               $("#subway").val(data[0].subway);
+               $("#feature").val(data[0].feature);
+               $("#area").val(data[0].area);
+               $("#picimg").html("");
+               $("#housetype").val(data[0].housetype);
+               $("#projectid").val(data[0].projectid);
+               $("#description").val(data[0].description);
+               $("#matching").val(data[0].matching);
+               $("#imgname").val("");
+               var tmpname = (data[0].img).split(";");
+               for(var i=0;i<tmpname.length;i++){
+                setImg(tmpname[i]);
+               }
+               $("#docid").val(id);
+        }});
+        $('#addModal').modal('show');
+    }
+
+	function submitDoc(){
+		if($("#docid").val()=="0"){
+			//insert
+			$.ajax({ type:"POST" , url: "/"+_page+"/insert", data:{
+                title:$("#title").val(),
+                price:$("#price").val(),
+                unitPrice:$("#unitPrice").val(),
+                shoufu:$("#shoufu").val(),
+                monthly:$("#monthly").val(),
+                type:$("#type").val(),
+                orientation:$("#orientation").val(),
+                level:$("#level").val(),
+                village:$("#village").val(),
+                address:$("#address").val(),
+                brokersid:$("#brokersid").val(),
+                region:$("#region").val(),
+                subway:$("#subway").val(),
+                feature:$("#feature").val(),
+                area:$("#area").val(),
+                housetype:$("#housetype").val(),
+                projectid:$("#projectid").val(),
+                description:$("#description").val(),
+                matching:$("#matching").val(),
+                img:$("#imgname").val()
+                }, success: function(data){
+                    if(data==200){
+                        $('#addModal').modal('hide');
+                        window.location.reload();
+                    }
+        	}});
+		}else{
+			//update
+			$.ajax({ type:"POST" , url: "/"+_page+"/update", data:{
+                title:$("#title").val(),
+                price:$("#price").val(),
+                unitPrice:$("#unitPrice").val(),
+                shoufu:$("#shoufu").val(),
+                monthly:$("#monthly").val(),
+                type:$("#type").val(),
+                orientation:$("#orientation").val(),
+                level:$("#level").val(),
+                village:$("#village").val(),
+                address:$("#address").val(),
+                brokersid:$("#brokersid").val(),
+                region:$("#region").val(),
+                subway:$("#subway").val(),
+                feature:$("#feature").val(),
+                area:$("#area").val(),
+                img:$("#imgname").val(),
+                housetype:$("#housetype").val(),
+                projectid:$("#projectid").val(),
+                description:$("#description").val(),
+                matching:$("#matching").val(),
+                docid:$("#docid").val()
+                }, success: function(data){
+                    if(data==200){
+                        $('#addModal').modal('hide');
+                        window.location.reload();
+                    }
+        	}});
+		}
+    }
+
+    function delinfo(id,state){
+    	$.confirm({
+    		title: '请确认',
+    		content: '是否继续操作？',
+    		confirm: function(){
+        		$.ajax({ type:"POST" , url: "/"+_page+"/delinfo", data:{id:id,state:state}, success: function(data){
+        			if(data==200){
+              			window.location.reload();     
+        			}
+      			}});	
+    		}
+		  });
+    }
+
+    function setSpecial(id,sepical){
+        $.ajax({ type:"POST" , url: "/"+_page+"/setSpecial", data:{id:id,sepical:sepical}, success: function(data){
+            if(data==200){
+                window.location.reload();     
+            }
+        }});  
+    }
+
+<%if(info){%>
+    alert("<%=info%>");
+<%}%>
+</script>
+<% include footer %>

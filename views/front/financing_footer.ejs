@@ -1,0 +1,46 @@
+<%
+var arr1 = "理财首页,相关介绍,理财产品".split(",");
+var arr2 = "/financing_home,/financing_introduce,/financing_list".split(",");
+%>
+<footer>
+    <div class="f-center">
+        <div class="f-tleft">
+            <ul>
+                <%for(var i in arr1){%>
+                    <li><a href="<%=arr2[i]%>"><%=arr1[i]%></a></li>
+                <%}%>
+                <li><a class="a-red" href='/estate_home'>房屋租售</a></li>
+            </ul>
+        </div>
+        <div class="f-tright">
+            理财投资，收益最优化 / 热线电话：4006-899-855
+        </div>
+        <div class="clear"></div>
+        <hr/>
+        <div class="f-mleft">
+           <div class="f-title">合作与友情链接</div>
+           <p>
+                <ul>
+                	<li>&nbsp;</li>
+                	<!--
+                    <li>北京二手房房产网</li>
+                    <li>北京新房网</li>
+                    <li>杭州地铁房</li>
+                    <li>天津房屋出租</li>
+                   -->
+                </ul>
+           </p>
+           <div class="clear"></div>
+           <div class="f-title">联系我们</div>
+           <p>办公地址：上海市浦东新区丁香路1066弄33号 联系电话: 021-50150988</p>
+        </div>
+        <div class="f-mright">
+            <img src="/images/qrcode.png">
+        </div>
+        <div class="clear"></div>
+        <hr/>
+        <p>上海瑞鹏房地产有限公司|网络经营许可证 沪ICP备 11033455号-11</p>
+        <p>© 2015-2016 瑞鹏网 www,ruipeng.com版权所有</p>
+        <div class="footer_bottom"></div>
+    </div>
+</footer>

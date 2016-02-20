@@ -1,0 +1,47 @@
+<div class="option_left_top">
+	<table>
+		<tr>
+			<td><img src="/images/tou.png" alt=""></td>
+			<td>
+				<p>欢迎您，</p>
+				<p><%=cuser%>!</p>
+			</td>
+		</tr>
+	</table>
+	<%if(url == "/option_info"){%>
+		<div class="olt1" >我的基本信息</div>
+	<%}else{%>
+		<div class="olt2" onclick="window.location='/option_info';">我的基本信息</div>
+	<%}%>
+</div>
+<div class="option_left_middle">
+	<div class="olm" >地产信息</div>
+	<%if(url == "/option_estate1"){%>
+		<div class="olt1" >关注的房源</div>
+	<%}else{%>
+		<div class="olt2" onclick="window.location='/option_estate1';">关注的房源</div>
+	<%}%>
+	<%if(url == "/option_estate2"){%>
+		<div class="olt1" >看房记录</div>
+	<%}else{%>
+		<div class="olt2" onclick="window.location='/option_estate2';">看房记录</div>
+	<%}%>
+	<%if(url == "/option_estate3"){%>
+		<div class="olt1" >我的委托</div>
+	<%}else{%>
+		<div class="olt2" onclick="window.location='/option_estate3';">我的委托</div>
+	<%}%>
+</div>
+<div class="option_left_bottom">
+	<div class="olm" >财富中心</div>
+	<%if(url == "/option_financing1"){%>
+		<div class="olt1" >关注的产品</div>
+	<%}else{%>
+		<div class="olt2" onclick="window.location='/option_financing1';">关注的产品</div>
+	<%}%>
+	<%if(url == "/option_financing2"){%>
+		<div class="olt1" >已认购的产品</div>
+	<%}else{%>
+		<div class="olt2" onclick="window.location='/option_financing2';">已认购的产品</div>
+	<%}%>
+</div>

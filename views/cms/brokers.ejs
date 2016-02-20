@@ -1,0 +1,149 @@
+<!--页面逻辑-->
+<% include header %>
+	<table class="tbpage">
+		<tr>
+			<td>
+				<button type="button" class="btn btn-default" id="table_new" onclick="newDoc()">新增经纪人</button>
+				<table class="table table-hover" id="table_list">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>姓名</th>
+							<th>职务</th>
+							<th>联系方式</th>
+							<th>历史成交</th>
+							<th>总带看</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%
+        for(var i in record){
+        %>
+							<tr>
+								<td>
+									<%-record[i].id%>
+								</td>
+								<td>
+									<%=record[i].name%>
+								</td>
+								<td>
+									<%=record[i].job%>
+								</td>
+								<td>
+									<%=record[i].tel%>
+								</td>
+								<td>
+									<%=record[i].history%>
+								</td>
+								<td>
+									<%=record[i].record%>
+								</td>
+								<td>
+									<button type="button" class="btn btn-default btn-xs" onclick="editDoc(<%=record[i].id%>)">编辑</button>
+								</td>
+							</tr>
+							<%}%>
+					</tbody>
+				</table>
+				<!--分页符-->
+				<div style='width:100%;text-align:center'>
+					<button type='button' <%=isFirstPage? "disabled": ""%>
+						<%=isFirstPage?"":"onclick=toPage("+(page-1)+");"%> class='btn btn-default btn-xs'>上一页</button>
+					当前第
+					<%=page%>页/共
+						<%=totalpage%>页&nbsp;
+							<%=total%>条数据
+								<button type='button' <%=isLastPage? "disabled": ""%>
+									<%=isLastPage?"":"onclick=toPage("+(page+1)+");"%> class='btn btn-default btn-xs'>下一页</button>
+				</div>
+				<br/>
+				<br/>
+			</td>
+		</tr>
+	</table>
+	<!--table footer -->
+	</td>
+	</tr>
+	</table>
+
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width:800px">
+			<div class="modal-content">
+				<div class="modal-body">
+					<table class="table table-bordered">
+						<tr>
+							<td>姓名</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="name"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>职务</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="job"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>历史成交</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="history" oninput="checkNum(this)"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>所属门店</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="store"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>联系方式</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="tel"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>主营板块</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="plate"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>重点小区</td>
+							<td>
+								<input type="text" class="input-sm form-control" id="keycell"></input>
+							</td>
+						</tr>
+						<tr>
+							<td>经纪人自评</td>
+							<td>
+								<textarea class="input-sm form-control" id="selfrating" cols="30" rows="3"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>照片</td>
+							<td>
+								<div>（建议大小:122*162）</div>
+								<iframe frameborder=0 src="/cms/upload" style="width:550px;height:60px"></iframe>
+								<div id="picimg"></div>
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" id="docid"></input>
+					<input type="hidden" id="imgname"></input>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" class="btn btn-primary" onclick="submitDoc();">
+						提交
+					</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal -->
+		<input type="hidden" id="info" value="<%=info%>" />
+		<script type="text/javascript" src="/javascripts/cms/brokers.js"></script>
+		<% include footer %>

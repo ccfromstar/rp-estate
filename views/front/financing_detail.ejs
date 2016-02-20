@@ -1,0 +1,73 @@
+<%var path = "瑞鹏网 > 房屋租赁 > 房产信息 > "+record[0].name;%>
+<% include financing_header %>
+<div class="div-adv">
+    <% include financing_menu %>
+    <% include financing_adv %>
+    <nav class="navigate">
+       <%=path%>
+    </nav>
+    <div class="fin_header">
+        <h1><%=record[0].manager%>-<%=record[0].name%></h1>
+        <hr>
+        <table>
+            <tr>
+                <td style="width:100px">基金名称：</td>
+                <td><%=record[0].name%></td>
+            </tr>
+            <tr>
+                <td>基金经理：</td>
+                <td><%=record[0].manager%></td>
+            </tr>
+            <tr>
+                <td>投资策略：</td>
+                <td><%=record[0].strategy%></td>
+            </tr>
+            <tr>
+                <td>运行时间：</td>
+                <td><%=record[0].runtime%></td>
+            </tr>
+            <tr>
+                <td>认购起点</td>
+                <td><%=record[0].start%></td>
+            </tr>
+            <tr>
+                <td>开放日</td>
+                <td><%=record[0].opendate%></td>
+            </tr>
+            <tr>
+                <td>近6月收益：</td>
+                <td><span><%=record[0].sixmonth%></span></td>
+            </tr>
+            <tr>
+                <td>近1年收益：</td>
+                <td><span><%=record[0].oneyear%></span></td>
+            </tr>
+            <tr>
+                <td>累计收益：</td>
+                <td><span><%=record[0].accu%></span></td>
+            </tr>
+            <tr>
+                <td>年化收益：</td>
+                <td><span><%=record[0].yearly%></span></td>
+            </tr>
+             <tr>
+                <td>最新净值：</td>
+                <td><span><%=record[0].networth%></span></td>
+            </tr>
+        </table>
+        <h2>收益走势图</h2>
+        <hr>
+        <img src="/files/<%=record[0].img%>" alt="">
+        <h2>私募公司介绍</h2>
+        <hr>
+        <%-record[0].introduction.replace(/\n/g,"<br/>")%>
+        <br/><br/>
+    </div>
+</div>
+<% include financing_define %>
+
+<script type="text/javascript">
+
+$("title").html("<%=record[0].name%>");
+</script>
+<% include financing_footer %>

@@ -1,0 +1,50 @@
+<% include estate_header %>
+<% include menu %>
+<div class="option_info">
+    <% include navigate %>
+    <div class="option_content">
+      <div class="opetion_left">
+        <% include option_nav %>
+      </div>
+      <div class="opetion_right">
+          <div class="option_rightcontent">
+              <h1>发布委托信息</h1>
+              <table class="estate3">
+                <tr>
+                  <td>具体要求：</td>
+                  <td style="width:600px"><textarea class="input-sm form-control" id="info"  rows="6"></textarea></td>
+                </tr>
+              </table>
+              <div style="cursor:pointer;margin-top:35px;text-align:center;color:#FFFFFF;font-size:12px;width:200px;background:#DA362A;height:35px;line-height:35px;border-radius:5px;margin:0 auto;" onclick="submitDoc()">确认发布</div>
+              <h2>我的委托</h2>
+              <table class="log_tb table">
+                  <tr>
+                    <th>发布日期</th>
+                    <th>具体内容</th>
+                  </tr>
+                  <%for(var i in rows1){%>
+                      <tr>
+                        <td><%=rows1[i].createtime%></td>
+                        <td><p title="<%=rows1[i].info%>"><%=rows1[i].info%></p></td>
+                      </tr>
+                  <%}%>
+              </table>
+          </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+</div>
+<script type="text/javascript">
+function submitDoc(){
+    $.ajax({ type:"POST" , url: "/role/insertEntrust", data:{
+                userid:<%=cid%>,
+                info:$("#info").val()
+                }, success: function(data){
+                    if(data==200){
+                        alert("发布成功！");
+                        window.location.reload();
+                    }
+    }});
+}
+</script>
+ <% include footer %>
