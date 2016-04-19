@@ -109,4 +109,6 @@ module.exports = function (app, routes) {
     app.get('/User/getConcernedByUserId',routes.User_getConcernedByUserId);
     app.get('/User/getEntrustByUserId',routes.User_getEntrustByUserId);
     app.get('/User/getHouserecordByUserId',routes.User_getHouserecordByUserId);
+    app.get('/House/getArea',routes.House_getArea);
+    app.get('/SMS/send',routes.SMS_send);
 };

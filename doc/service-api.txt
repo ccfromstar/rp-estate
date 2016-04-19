@@ -1,21 +1,31 @@
 API文档
 
 /*********************************/
-1. 接口测试服务器地址
-http://127.0.0.1:2581
+接口测试服务器地址
+hosts = "http://119.254.110.185:2581"
 
 /*********************************/
-2. 用户登录
+用户注册
 (POST)
-URL: http://127.0.0.1:2581/role/chekuserlogin
+URL: hosts + "/role/appReg"
+参数(必需的)：  username 手机号
+参数(必需的)：  password 密码
+返回值:  200 <- 注册成功 
+         300 <- 注册失败
+         400 <- 手机号已存在 
+
+/*********************************/
+用户登录
+(POST)
+URL: hosts + "/role/chekuserlogin"
 参数(必需的)：  username 用户名
 参数(必需的)：  password 密码
 返回值:  200 <- 登录成功 
 
 /*********************************/
-3. 根据用户名获取用户信息
+根据用户名获取用户信息
 (GET)
-URL: http://127.0.0.1:2581/User/getByUserName?u=13383829382
+URL: hosts+ "/User/getByUserName?u=13383829382"
 参数(必需的)：  u 用户手机号
 返回用户详细数据, 类型json, 结构:
 [
@@ -30,9 +40,81 @@ URL: http://127.0.0.1:2581/User/getByUserName?u=13383829382
 ]
 
 /*********************************/
-4. 获取所有房屋信息
+获取区域范围
 (GET)
-URL: http://127.0.0.1:2581/House/getAll
+URL: hosts+"/House/getArea"
+返回区域列表数据，类型json，结构:
+[
+  {
+    "id": 1,
+    "name": "浦东"
+  },
+  {
+    "id": 2,
+    "name": "杨浦"
+  },
+  {
+    "id": 3,
+    "name": "徐汇"
+  },
+  {
+    "id": 4,
+    "name": "闸北"
+  },
+  {
+    "id": 5,
+    "name": "虹口"
+  },
+  {
+    "id": 6,
+    "name": "普陀"
+  },
+  {
+    "id": 7,
+    "name": "长宁"
+  },
+  {
+    "id": 8,
+    "name": "卢湾"
+  },
+  {
+    "id": 9,
+    "name": "黄浦"
+  },
+  {
+    "id": 10,
+    "name": "静安"
+  },
+  {
+    "id": 11,
+    "name": "嘉定"
+  },
+  {
+    "id": 12,
+    "name": "闵行"
+  },
+  {
+    "id": 13,
+    "name": "宝山"
+  },
+  {
+    "id": 14,
+    "name": "松江"
+  },
+  {
+    "id": 15,
+    "name": "青浦"
+  },
+  {
+    "id": 16,
+    "name": "崇明"
+  }
+]
+
+/*********************************/
+获取所有房屋信息
+(GET)
+URL: hosts+"/House/getAll"
 返回房屋列表数据, 类型json, 结构:
 [
   {
@@ -67,9 +149,9 @@ URL: http://127.0.0.1:2581/House/getAll
 ]
 
 /*********************************/
-5. 获取房屋明细
+获取房屋明细
 (GET)
-URL: http://127.0.0.1:2581/House/getById?id=1
+URL: hosts+"/House/getById?id=1";
 参数(必需的)：  id 房屋id
 返回房屋详细数据, 类型json, 结构:
 [
@@ -101,9 +183,9 @@ URL: http://127.0.0.1:2581/House/getById?id=1
 ]
 
 /*********************************/
-6. 搜索房屋信息
+搜索房屋信息
 (GET)
-URL: http://127.0.0.1:2581/House/getByKey?region=闵行&type=3室&orderby=1&subway=9号线&price=200万-500万&p=1
+URL: hosts+"/House/getByKey?region=闵行&type=3室&orderby=1&subway=9号线&price=200万-500万&p=1"
 参数(可选的)：  region 区域
 参数(可选的)：  type 房型
 参数(可选的)：  orderby 排序
@@ -144,9 +226,9 @@ URL: http://127.0.0.1:2581/House/getByKey?region=闵行&type=3室&orderby=1&subw
 ]
 
 /*********************************/
-7. 获取楼盘信息
+获取楼盘信息
 (GET)
-URL: http://127.0.0.1:2581/House/getProjectById?id=1
+URL: hosts+"/House/getProjectById?id=1"
 参数(必需的)：  id 楼盘id
 返回楼盘详细数据, 类型json, 结构:
 [
@@ -169,9 +251,9 @@ URL: http://127.0.0.1:2581/House/getProjectById?id=1
 ]
 
 /*********************************/
-8. 关注的房源
+关注的房源
 (GET)
-URL: http://127.0.0.1:2581/User/getConcernedByUserId?id=15
+URL: hosts+"/User/getConcernedByUserId?id=15"
 参数(必需的)：  id 用户id
 返回关注的房源列表, 类型json, 结构:
 [
@@ -193,9 +275,9 @@ URL: http://127.0.0.1:2581/User/getConcernedByUserId?id=15
 ]
 
 /*********************************/
-9. 委托信息
+委托信息
 (GET)
-URL: http://127.0.0.1:2581/User/getEntrustByUserId?id=15
+URL: hosts+"/User/getEntrustByUserId?id=15"
 参数(必需的)：  id 用户id
 返回关注的委托信息列表, 类型json, 结构:
 [
@@ -214,9 +296,9 @@ URL: http://127.0.0.1:2581/User/getEntrustByUserId?id=15
 ]
 
 /*********************************/
-10. 看房记录
+看房记录
 (GET)
-URL: http://127.0.0.1:2581/User/getHouserecordByUserId?id=13611847679
+URL: hosts+"/User/getHouserecordByUserId?id=13611847679"
 参数(必需的)：  id 用户手机号
 返回看房记录信息列表, 类型json, 结构:
 [
@@ -254,6 +336,14 @@ URL: http://127.0.0.1:2581/User/getHouserecordByUserId?id=13611847679
   }
 ]
 
+/*********************************/
+短信接口
+(GET)
+URL: hosts+"/Sms/Send"
+参数(必需的)：  mobile 用户手机号
+参数(必需的)：  content 短信内容
+返回验证码JSON
 
-
-           
+{
+  "code": "816937"
+}
