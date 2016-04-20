@@ -9,6 +9,7 @@ var fund = require('./models/fund.js');
 var houserecord = require('./models/houserecord.js');
 var project = require('./models/project.js');
 var LIMIT = 10;
+var request = require('request');
 
 /**通用函数BEGIN**/
 function getToday() {
@@ -712,14 +713,22 @@ exports.House_getArea = function(req, res) {
 }
 
 exports.SMS_send = function(req, res) {
+	var mobile = req.query.mobile;
 	var Num = "";
 	for (var i = 0; i < 6; i++) {
 		Num += Math.floor(Math.random() * 10);
 	}
-	var json1 = {
-		code:Num
-	}
-	res.json(json1);
+	var url = "http://v.juhe.cn/sms/send?";
+	url += "mobile=" + mobile + "&tpl_id=12850&tpl_value=%23code%23%3D" + Num + "&dtype=&key=0c6bf442de22924cf4e35a105f43ae2b";
+	request(url, function(error, response, body) {
+		if (!error && response.statusCode == 200) {
+			var json1 = {
+				code : Num,
+				smsbody : body
+			};
+			res.json(json1);
+		}
+	});
 }
 
 exports.House_getById = function(req, res) {

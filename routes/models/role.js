@@ -151,8 +151,8 @@ function regUser(req, res) {
 };
 
 function appReg(req, res) {
-	var password = req.param('password');
 	var username = req.param('username');
+	var password = req.param('password');
 	
 	async.waterfall([function(callback) {
 		var sql1 = "select * from user where username = '" + username + "'";
@@ -161,7 +161,7 @@ function appReg(req, res) {
 				console.log('err1:' + err);
 				return;
 			}
-			callback((rows[0]?"400":null));
+			callback((rows[0]?"username has signed in":null));
 		});
 	}, function(callback) {
 		var sql2 = "insert into user (username,password,type) values ('" + username + "','" + password + "','app')";
@@ -173,7 +173,7 @@ function appReg(req, res) {
 			callback(err, rows.affectedRows);
 		});
 	}], function(err, rows) {
-		err ? res.send(err) : res.send("200");
+		err ? res.json({'error':'1','errorinfo':err}) : res.json({'error':'0','errorinfo':null});
 	});
 	/*
 	mysql.query(sql2 ,function(error2,obj2){

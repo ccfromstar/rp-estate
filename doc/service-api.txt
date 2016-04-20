@@ -10,9 +10,10 @@ hosts = "http://119.254.110.185:2581"
 URL: hosts + "/role/appReg"
 参数(必需的)：  username 手机号
 参数(必需的)：  password 密码
-返回值:  200 <- 注册成功 
-         300 <- 注册失败
-         400 <- 手机号已存在 
+返回值: JSON对象
+{ "error": "1", "errorinfo": "username has signed in" }
+error:0 注册成功
+error:1 注册失败  errorinfo 失败原因
 
 /*********************************/
 用户登录
@@ -341,9 +342,10 @@ URL: hosts+"/User/getHouserecordByUserId?id=13611847679"
 (GET)
 URL: hosts+"/Sms/Send"
 参数(必需的)：  mobile 用户手机号
-参数(必需的)：  content 短信内容
-返回验证码JSON
-
+返回JSON
 {
-  "code": "816937"
+  "code": "130165",
+  "smsbody": "{\"reason\":\"发送成功\",\"result\":{\"sid\":\"9000420152911799800\",\"fee\":1,\"count\":1},\"error_code\":0}"
 }
+code: 6位随机验证码
+smsbody: 短信供应商接口返回值 
